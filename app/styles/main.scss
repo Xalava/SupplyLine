@@ -11,10 +11,32 @@ $icon-font-path: '../fonts/';
   padding: 0.2em 0;
 }
 
+
+$color-primary: #A55312;  // Main Primary color */
+$color-primary-1: #E09253;
+$color-primary-2: #CC7027;
+$color-primary-3: #823A00;
+$color-primary-4: #572700;
+
+$color-vivid: #16326E;  
+$color-vivid-1: #415C96;
+$color-vivid-2: #254588;
+$color-vivid-3: #082257;
+$color-vivid-4: #03153A;
+
+$color-neutral: #14860F;  // Main Secondary color (2) */
+$color-neutral-1: #49B643;
+$color-neutral-2: #26A51F;
+$color-neutral-3: #056900;
+$color-neutral-4: #044700;
+
+
+
 /* Space out content a bit */
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
