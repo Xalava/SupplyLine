@@ -40,17 +40,26 @@
           <p class="lead">A Simple Strategy Game in HTML5</p>
           <img class="" src="apple-touch-icon.png" alt="SupplyLine">
           <br/><br/>
-          <p><a class="btn btn-lg btn-success" onclick="launchGame()">Start Game</a></p>
-        </div>
+        <p><a class="btn btn-lg btn-success"  href="#game">Start Game</a></p>
+
+<!--           <p><a class="btn btn-lg btn-success" onclick="launchGame()">Start Game</a></p>
+ -->        </div>
 
         <div class="row marketing">
-          <div class="col-lg-10 col-lg-offset-1">
+          <div class="col-lg-12 ">
+          <br/>
             <h3>The concept</h3>
             <p>Supply Line is a turn-based, two to four players territorial strategy game. </p>
-            
+          <br/>
             <h3>Basic rules</h3>
             <p>At each turn, opponents can use their new supply of troups to conquer or reinforce their positions. Troups and territories are lost if they are cut from the supplies provided by a nearby city more than one turn.</p>
-            
+          <br/>
+            <h3>Guide</h3>
+            <ul>
+             <li><span class="glyphicon glyphicon-user"> Unit: </span> place & pick-up yours</li>
+             <li><span class="glyphicon glyphicon-th"> City: </span> Provides supplies for territories and increase number of new units per turn</li>
+             <li><span class="glyphicon glyphicon-cog"> Headquarters: </span> Yes, this is important</li>
+            <ul>
 
             
           </div>
@@ -58,40 +67,58 @@
       </section> <!-- wrapper -->
 
       <section id="game" >
-
         <div class="row">
 
-          <div id="board">
-            <table>
-              <tr>
-              <td v-for="line in map">{{ $index }}</td>
-              </tr>
-            </table>
+          <div class="col-md-9">
+            <div id="grid" >
+                <!-- vanilla -->
 
-            <div v-for="square in map[0]">
-              <input class="toggle btn {{square.owner}} {{square.feature}}" type="checkbox">
+            </div>
+            <!-- vue.js -->
+            <table class="gridy">
+<!--               <tr is="row-component" v-for="row in rows" :currentRow="row"></tr>
+ -->     
+                <tr v-for="row in rows"> 
+                    <td  v-for="square in row" is="square-component" :sq="square">
+
+                    </td> 
+                </tr>
+            </table>
+          </div>
+    
+          <div class="col-md-3 infobox">
+          <br>
+            <div class="panel panel-default">
+              <div class="panel-heading" :style="{'background-color': daPlayer.color}" >
+                <h3    >{{currentPlayerName}}</h3>
+              </div>
+
+              <div class="panel-body">
+                <h4> Units available <span class="badge">{{daPlayer.nbRsv}}</span></h4> 
+                <h4> Number of cities <span class="badge">{{ daPlayer.nbCities}}</span></h4>
+                <hr>
+            
+                <div class="alert alert-{{mType}}" role="alert">{{mTxt}}</div>
+                <br>
+              </div>
+
+             <div class="panel-footer text-center.">
+              <button class="btn btn-primary" onclick="endTurn()"> End Turn </button>
             </div>
           </div>
+          </div> <!-- infobox -->
 
-          <div id="infos">
-
-          </div>
         </div> <!-- row -->
-
-        <div class="row">
-
-
-
-
-          <div id="display" class="alert alert-{{message.state}}" role="alert">
-            {{ message.text }}
-
-          </div>
-        </div> <!-- row -->
-
       </section>
         
-
+                      <script type="text/x-template" id="square-template" >
+                        <td :class="{ 'water': isWater}" :style="{ 'background-color': playerColor}" onclick="daGame.squareAction({{boardCol}},{{boardRow}})">
+                          <span :class="{ 'glyphicon':true, 'glyphicon-user': occupied, 'glyphicon-th' :isCity, 'glyphicon-cog': isHQ}">
+                            <!--{{sq.boardCol}}.{{sq.boardRow}}-->
+                           
+                          </span>
+                        </td>
+                      </script>
 
 
 
@@ -106,7 +133,7 @@
             </div>
         
       </section> <!-- footer -->
-    </div>
+    </div> <!-- container -->
     
 
 
@@ -142,10 +169,10 @@
     <script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
     <!-- endbuild -->
     <script src="scripts/game.js"></script>
+    <script src="scripts/main.js"></script>
     <script src="scripts/view.js"></script>
     
     <!-- build:js scripts/main.js -->
-    <script src="scripts/main.js"></script>
     <!-- endbuild -->
 
   </body>

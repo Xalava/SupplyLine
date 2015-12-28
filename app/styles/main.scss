@@ -118,7 +118,7 @@ body {
   //DEV : Default scenario
 @media screen and (min-width: 950px) {
   .container {
-    max-width: 930px;
+    max-width: 950px;
   }
 
   /* Remove the padding we set earlier */
@@ -147,5 +147,82 @@ body {
 .gameWrapper {
   //
 
+
+}
+// prior
+.daboard {
+  width: 800px;
+  height: 500px;
+  background-color: gray;
+
+}
+
+.square {
+  position:relative;
+  width: 25px;
+  height: 25px;
+  background-color:$color-neutral-2;
+  line-height: 20px;
+  font-size: 3;
+    &:hover {
+    background-color:$color-neutral-3;
+
+    }
+
+
+}
+
+//top:{{sq.y}}; left:{{sq.x}};
+.infobox {
+  //background-color:$color-primary-1;
+}
+
+.gridy { 
+  width: 700px;
+  height: 600px;
+  background-color: $color-neutral-1;
+  margin:1em auto; 
+  border-collapse:collapse ;
+
+}
+
+.gridy td {
+    cursor:pointer;
+    width: 20px; 
+    height:20px;
+    border:1px solid #AAA;
+    //box-shadow: 1px 1px 1px 1px gray;
+    text-align:center;
+    font-family:sans-serif; font-size:16px ;
+    //background-color:$color-vivid-2;
+
+  &:hover {
+    background-color:$color-neutral-3;
+
+    }
+
+  &.clicked {
+    background-color:$color-neutral-4;
+    font-weight:bold; color:red;
+  }
+}
+
+
+.bgColorA{
+  background-color:red;
+}
+
+.bgColorB{
+  background-color:blue;
+}
+
+.water {
+
+    background-image:
+    radial-gradient(
+      circle at top right,
+      #115,
+      #33E
+    );
 
 }
