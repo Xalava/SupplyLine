@@ -12,28 +12,36 @@ var settings = {
 	nbPlayers: 2,
 	water: 10,
 	squareSize: 25,
-	mapX: 16,
-	mapY: 14,
+	mapX: 8,
+	mapY: 6,
 	cities: 3
 }
 var playersList = [{
 	name: "Neutral",
-	color: "#333"
+	color: "#333",
+	colorClass: "colorNeutral"
 }, {
 	name: "Lefty",
-	color: "#F34"
+	color: "#F34",
+	colorClass: "colorA"
 }, {
 	name: "Righty",
-	color: "#AEC"
+	color: "#AEC",
+	colorClass:"colorB"
 }]
 
 function launchGame() {
 	var players = [];
 	for (var i = playersList.length - 1; i >= 0; i--) {
-		players[i] = new Player(i, playersList[i].name, playersList[i].color)
+		players[i] = new Player(i, playersList[i].name, playersList[i].color,playersList[i].colorClass)
 	};
+
+
 	daGame = new Game(settings.nbPlayers, settings.water, settings.cities, settings.mapX, settings.mapY, players, settings.squareSize);
 	console.log(daGame);
+	daGame.newTurn();
+
+
 	// Vue.js
 	game = new Vue({
 		el: '#game',
@@ -74,32 +82,53 @@ function launchGame() {
 					return this.sq;
 				}, // !??
 				computed: {
-					isWater: function () {
-						if (this.feature == -1) {
-							return true;
-						} else {
-							return false;
-						}
-					},
+					// isWater: function () {
+					// 	if (this.feature == -1) {
+					// 		return true;
+					// 	} else {
+					// 		return false;
+					// 	}
+					// },
 					isCity: function () {
 						if (this.feature == 1) {
-							return true;
+							return !this.occupied;
 						} else {
 							return false;
 						}
 					},
 					isHQ: function () {
 						if (this.feature == 2) {
-							return true;
+							return !this.occupied;
 						} else {
 							return false;
 						}
 					},
-					playerColor: function () {
-						//should be passed from parent
-						if (this.owner > 0) {
-							return daGame.players[this.owner].color;
-						}
+					proba: function () {
+						return daGame.estimateDifficulty(this.y,this.x);
+					},
+					diplayFeature: function () {
+						
+					},
+					// playerColor: function () {
+					// 	//should be passed from parent
+					// 	if (this.owner > 0) {
+					// 		return daGame.players[this.owner].color;
+					// 	}
+					// },
+					ownerColorClass: function () {
+						if (this.feature == -1) {
+							return "water";
+						} else {
+							if (this.supplied) {
+								return daGame.players[this.owner].colorClass;
+							} else {
+								return daGame.players[this.owner].colorClass + ' ' + 'unsupplied';
+
+							}
+
+							
+						 }
+						
 					},
 					methods: {
 						sqAction: function () {

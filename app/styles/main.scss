@@ -25,12 +25,14 @@ $color-vivid-3: #082257;
 $color-vivid-4: #03153A;
 
 $color-neutral: #14860F;  // Main Secondary color (2) */
-$color-neutral-1: #49B643;
+$color-neutral-1: #49B643; // Vert PRINCIPAL
 $color-neutral-2: #26A51F;
 $color-neutral-3: #056900;
 $color-neutral-4: #044700;
 
 
+$colorA:#F34;
+$colorB:#AEC;
 
 /* Space out content a bit */
 body {
@@ -144,35 +146,6 @@ body {
 
 // Game Style
 
-.gameWrapper {
-  //
-
-
-}
-// prior
-.daboard {
-  width: 800px;
-  height: 500px;
-  background-color: gray;
-
-}
-
-.square {
-  position:relative;
-  width: 25px;
-  height: 25px;
-  background-color:$color-neutral-2;
-  line-height: 20px;
-  font-size: 3;
-    &:hover {
-    background-color:$color-neutral-3;
-
-    }
-
-
-}
-
-//top:{{sq.y}}; left:{{sq.x}};
 .infobox {
   //background-color:$color-primary-1;
 }
@@ -180,7 +153,6 @@ body {
 .gridy { 
   width: 700px;
   height: 600px;
-  background-color: $color-neutral-1;
   margin:1em auto; 
   border-collapse:collapse ;
 
@@ -195,29 +167,57 @@ body {
     text-align:center;
     font-family:sans-serif; font-size:16px ;
     //background-color:$color-vivid-2;
+    //transition: all .2s ease-in-out; 
+    &:hover { 
+    // transform: scale(1.5); 
+    }
+    &.clicked {
+       font-weight:bold; color:red;
+    }
+    .span:hover{
+     //transform: scale(1.5);
+    }
+}
 
-  &:hover {
-    background-color:$color-neutral-3;
+@mixin square-color($color) {
+  background-color: $color;
+
+
+   &:hover {
+   background-color:darken($color,10%);
+     text-shadow: 1px 1px 1px #300000; 
+
+  // color:#EEE;
+    }
+    &.unsupplied {
+    //background-color:desaturate($color,30%);
+//       background-image: 
+//         radial-gradient(
+//           circle at top right,
+// //          darken(desaturate($color,30%),20%) ,
+//           #CCC 10px,
+//           darken(desaturate($color,20%),10%) 
+//         );
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      lighten(desaturate($color,10%),20%),
+      darken(desaturate($color,10%),5%) 10px,
+      darken(desaturate($color,10%),20%) 5px
+
+    );
+
 
     }
-
-  &.clicked {
-    background-color:$color-neutral-4;
-    font-weight:bold; color:red;
-  }
 }
 
+.colorNeutral { @include square-color($color-neutral-1); }
+.colorA { @include square-color($colorA); }
+.colorB { @include square-color($colorB); }
 
-.bgColorA{
-  background-color:red;
-}
 
-.bgColorB{
-  background-color:blue;
-}
 
 .water {
-
     background-image:
     radial-gradient(
       circle at top right,
@@ -226,3 +226,4 @@ body {
     );
 
 }
+
