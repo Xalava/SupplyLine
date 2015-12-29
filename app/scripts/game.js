@@ -10,7 +10,7 @@ var Player = function (id, name, color,colorClass) {
 	this.color = color;// may be rundundant used for non square
 	this.colorClass = colorClass;
 	this.nbCities = 0;
-	this.nbRsv = 15;
+	this.nbRsv = 5;
 	if (id === 0) {
 		this.alive = false;
 	} else {
@@ -72,7 +72,7 @@ Game.prototype.generateMap = function (mapX, mapY, water, cities, squareSize, nb
 				//todo adapt to severaly players
 				switch (nbPlayers) {
 				case 2:
-					var limit = Math.floor(this.mapX *  49/100)
+					var limit = Math.floor(this.mapX *  48/100)
 					if (i < limit) {
 						map[j][i].owner = 1;
 					} else if (i > mapX - limit) {
@@ -234,9 +234,9 @@ Game.prototype.looseUnsupplied = function () {
 	for (var r = this.mapY - 1; r >= 0; r--) {
 		for (var c = this.mapX - 1; c >= 0; c--) {
 			var cs = this.board[r][c];
-			if (cs.owner === thiscurrentPlayer && cs.supplied === false){
-				//if (change)
-
+			if (cs.owner === this.currentPlayer && cs.supplied === false){
+				cs.owner = 0;
+				cs.supplied = true;
 			}
 		}
 	}
@@ -244,79 +244,78 @@ Game.prototype.looseUnsupplied = function () {
 
 Game.prototype.updateSupplies = function (y,x) {
 	//update adjancent cell if recent action cut their supplies
-	// for debugging
-
-	// for (var m = this.mapY - 1; m >= 0; m--) {
-	// 	for (var n = this.mapX - 1; n >= 0; n--) {
+	// // for debugging
+	// var m;
+	// var n; 
+	// for ( m = this.mapY - 1; m >= 0; m--) {
+	// 	for ( n = this.mapX - 1; n >= 0; n--) {
 	// 		this.board[m][n].occupied = false; 
 			
 	// 	};
 	// };
 
 	var initadj = this.adjacentCells(y,x);
-	//heavy stuff
-	//this.uncheckAll();
-
-	//this.checkSupplyAll();
 
 	var checkMatrix = new Array(this.mapY);
-
-	// for (var m = checkMatrix.length - 1; m >= 0; m--) {
-	// 	checkMatrix[km= new Array(this.mapX);
-	// 	for
-
-
-	// };
 
 	for (var m = this.mapY - 1; m >= 0; m--) {
 		checkMatrix[m] = new Array(this.mapX);
 		for (var n = this.mapX - 1; n >= 0; n--) {
-			checkMatrix[m][n]=-1; //slighly hugly in termes of optimizaiton , more readable than undefined.
-			
+			checkMatrix[m][n]=-1; //more readable than typeof 'undefined.''			
 		};
 	};
 
-console.log("# Before for on ", y, x)
+	console.log("# Before for on ", y, x)
 	for (var i = initadj.length - 1; i >= 0; i--) {
 		console.log("----",i)
-		if((initadj[i].owner != this.currentPlayer || ( initadj[i].owner == this.currentPlayer && initadj[i].supplied ==false) ) && initadj[i].owner != 0 ){
-		// a good starting point : not neutral, other player, our own player if a square is unsupplied ( will change back state (should be treated seperately))
 			if (checkMatrix[initadj[i].boardRow][initadj[i].boardCol] == -1 ) { // if already visited (likely), we skip!
-
-				var reachables= []; // square reachable from adj[i]
-				console.log(' * Updating supplies for ', initadj[i].boardRow,initadj[i].boardCol)
-
-				//launching recursion for this point
-
-				if (this.recursiveReach(initadj[i], checkMatrix, reachables, initadj[i].owner, i)) {
 			
+				if(initadj[i].owner != this.currentPlayer && initadj[i].owner != 0 ){
 
-					//we found supply, we can leave the loop, our work is done here.
+					var reachables= []; // square reachable from adj[i]
+					//launching recursion for this point
+					if (this.recursiveReach(initadj[i], checkMatrix, reachables, initadj[i].owner, i)) {
+				
+						//for (var j = reachables.length - 1; j >= 0; j--) {
+						//	reachables[j].supplied = true;
+						//};
 
-					for (var j = reachables.length - 1; j >= 0; j--) {
-						reachables[j].supplied = true;
-					};
+					} else {
+						//we couldn't find any any, we set unsupplied the array
+						console.log("unsupplies from ", initadj[i].boardRow, initadj[i].boardCol)
 
-				} else {
-					//we couldn't find any any, we set unsupplied the array
-					console.log("unsupplies from ", initadj[i].boardRow, initadj[i].boardCol)
+						for (var j = reachables.length - 1; j >= 0; j--) {
+							reachables[j].supplied = false;
 
-					for (var j = reachables.length - 1; j >= 0; j--) {
-						reachables[j].supplied = false;
-
-
-					};
+						};
+					}
+				} else if (initadj[i].owner == this.currentPlayer && initadj[i].supplied ==false) {
+			
+					this.recursiveSupply(initadj[i], checkMatrix,this.currentPlayer, i)
 				}
-
 			} else {
 				console.log(initadj[i].boardRow,initadj[i].boardCol, "was already checked")
 			}
-
-		}
 	};
-
 }
 
+Game.prototype.recursiveSupply= function (cs,cMatrix, landlord, run) {
+	//We supply all the cells we encounter avoiding loops
+	console.log("Supply Supply on ", cs.boardRow, cs.boardCol," with run ", run)
+
+	cMatrix[cs.boardRow][cs.boardCol]= run;
+	cs.supplied = true;
+
+	var adj = this.adjacentCells(cs.boardRow,cs.boardCol);
+	for (var i = adj.length - 1; i >= 0; i--) {
+		if(adj[i].owner == landlord) {// we skip other players squares. 
+			if (cMatrix[adj[i].boardRow][adj[i].boardCol] < run) { //not visited either this run or prior
+				this.recursiveSupply(adj[i], cMatrix,landlord, run);
+			}
+			
+		}
+	};
+}
 
 Game.prototype.recursiveReach = function (cs,cMatrix, reachables, landlord, run) {
 	cMatrix[cs.boardRow][cs.boardCol]= run; //we know this square as been visited, and at which run
@@ -328,10 +327,7 @@ Game.prototype.recursiveReach = function (cs,cMatrix, reachables, landlord, run)
 	}
 	reachables.push(cs);//saving it
 
-	cs.occupied = true;
-
-
-
+	//debug 	cs.occupied = true;
 
 	var adj = this.adjacentCells(cs.boardRow,cs.boardCol);
 	for (var i = adj.length - 1; i >= 0; i--) {
@@ -354,91 +350,6 @@ Game.prototype.recursiveReach = function (cs,cMatrix, reachables, landlord, run)
 	return false;
 }
 
-
-
-
-Game.prototype.checkSupplyAll = function () {
-	for (var r = this.mapY - 1; r >= 0; r--) {
-		for (var c = this.mapX - 1; c >= 0; c--) {
-			var cs = this.board[r][c];
-				if(cs.isDone){
-					//noting
-				} else {
-
-					var adj = this.adjacentCells(cs.boardRow,cs.boardCol)
-					for (var i = adj.length - 1; i >= 0; i--) {
-						if(this.checkSupply(adj[i],player)){
-
-						}
-
-					}
-			}
-		}
-	}
-}
-
-Game.prototype.checkSupplyAllr = function () {
-
-}
-
-Game.prototype.checkSupply = function (cs,player) {
-
-	console.log("Call checkSupply",cs.boardRow,cs.boardCol,player);
-	
-	cs.isChecked = true; //lock
-	if (cs.feature > 0){
-		cs.supplied = true; //unnecessary
-		cs.isDone = true;
-		return true; //found city
-	} else if(cs.owner != player) {
-		return false; //Not player we are interested in, skiping
-	} else {
-		console.log("going for adj");
-		var adj = this.adjacentCells(cs.boardRow,cs.boardCol)
-		for (var i = adj.length - 1; i >= 0; i--) {
-			if (adj[i].isChecked){
-				if(adj[i].isDone){
-					cs.isDone = true;
-					cs.supplied = true;
-					return adj[i].supplied;
-				}
-			} else {
-				if(this.checkSupply(adj[i],player)){
-					//if only one call comes with true, we are set up
-					adj[i].supplied = true; // Probably unnecessary
-					cs.supplied = true; //current cell is supplied
-					cs.isDone = true;
-					return true;
-				}
-			}						
-		}; //End For
-		//couldn't find any, here is the important switch
-		cs.supplied = false;
-		cs.isDone =true;
-		return false;
-	}
-}
-
-Game.prototype.uncheckAll = function () {
-	for (var r = this.mapY - 1; r >= 0; r--) {
-		for (var c = this.mapX - 1; c >= 0; c--) {
-			this.board[r][c].isChecked = false;
-			this.board[r][c].isDone = false;
-
-		}
-	}
-	console.log("uncheckAll")
-}
-
-// Game.prototype.applyAll = function (daFunction) {
-
-// 	for (var r = this.mapY - 1; r >= 0; r--) {
-// 		for (var c = this.mapX - 1; c >= 0; c--) {
-// 			var cs = this.board[r][c];
-// 			daFunction(cs);
-// 		}
-// 	}
-// }
 Game.prototype.countCities = function (player) {
 	//todo (not critical)
 	this.players[player].nbCities == 0;
@@ -464,6 +375,7 @@ Game.prototype.changePlayer = function () {
 
 Game.prototype.endTurn = function () {
 
+	this.looseUnsupplied();
 	this.changePlayer();
 	this.newTurn();
 

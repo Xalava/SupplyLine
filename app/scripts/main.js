@@ -12,8 +12,8 @@ var settings = {
 	nbPlayers: 2,
 	water: 10,
 	squareSize: 25,
-	mapX: 8,
-	mapY: 6,
+	mapX: 20,
+	mapY: 16,
 	cities: 3
 }
 var playersList = [{
