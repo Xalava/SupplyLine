@@ -174,10 +174,9 @@ body {
     &.clicked {
        font-weight:bold; color:red;
     }
-    .span:hover{
-     //transform: scale(1.5);
-    }
+
 }
+
 
 @mixin square-color($color) {
   background-color: $color;
@@ -224,6 +223,9 @@ body {
       #115,
       #33E
     );
+    
+
+
 
 }
 

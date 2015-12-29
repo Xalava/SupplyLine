@@ -71,11 +71,8 @@
             </div>
             <!-- vue.js -->
             <table class="gridy">
-<!--               <tr is="row-component" v-for="row in rows" :currentRow="row"></tr>
- -->     
                 <tr v-for="row in rows"> 
                     <td  v-for="square in row" is="square-component" :sq="square">
-
                     </td> 
                 </tr>
             </table>
@@ -93,13 +90,13 @@
                 <h4>  <span class=" ">{{ daPlayer.nbCities}}</span> <span class="glyphicon glyphicon-th"></span> Cities</h4>
                 <hr>
             
-                <div class="small" > Probability {{ 100 -  nextProba}} % </div>
+                <div class="small yay" > Probability {{ 100 -  nextProba}} % </div>
                 <!-- TODO bring back information from hovered square -->
                 <br>
               </div>
 
              <div class="panel-footer text-center">
-              <button class="btn btn-primary" onclick="endTurn()"> End Turn </button>
+              <button class="btn btn-primary btn-lg yay " onclick="endTurn()"> End Turn </button>
             </div>
           </div>
                 <div class="alert alert-{{mType}}" role="alert">{{mTxt}}</div>
@@ -107,16 +104,14 @@
 
         </div> <!-- row -->
       </section>
-        
-                      <script type="text/x-template" id="square-template" >
-                        <td :class="ownerColorClass" onclick="daGame.squareAction({{boardCol}},{{boardRow}})" onmouseover="daGame.squareOver({{boardRow}},{{boardCol}})" >
-                          <span :class="{ 'glyphicon':true, 'glyphicon-user': occupied, 'glyphicon-th' :isCity, 'glyphicon-cog': isHQ}" >
-                          
-                          </span>
-                        </td>
-                      </script>
-
-
+                
+      <script type="text/x-template" id="square-template" >
+        <td :class="ownerColorClass" onclick="daGame.squareAction({{boardCol}},{{boardRow}})" onmouseover="daGame.squareOver({{boardRow}},{{boardCol}})" >
+          <span :class="{ 'glyphicon':true, 'glyphicon-user': occupied, 'glyphicon-th' :isCity, 'glyphicon-cog': isHQ}" class="yay">
+          
+          </span>
+        </td>
+      </script>
 
       <section class="footer">
           <p> ♥ From <a href="http://xalava.github.io">Xavier </a></p>
