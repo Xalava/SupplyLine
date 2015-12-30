@@ -33,10 +33,11 @@
       "browser": true
     },
     "rules": {
-      "quotes": [
-        2,
-        "single"
-      ]
+      "quotes": 0,
+      "eqeqeq": 0,
+      "strict": 0,
+      "semi": 0
     }
-  }
+  },
+  "dependencies": {}
 }
