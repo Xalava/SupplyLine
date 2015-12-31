@@ -21,6 +21,7 @@
     "gulp-sass": "^2.0.0",
     "gulp-size": "^1.2.1",
     "gulp-sourcemaps": "^1.5.0",
+    "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^1.1.0",
     "gulp-useref": "^1.1.1",
     "main-bower-files": "^2.5.0",
@@ -36,7 +37,14 @@
       "quotes": 0,
       "eqeqeq": 0,
       "strict": 0,
-      "semi": 0
+      "semi": 0,
+      "no-unused-vars": 0,
+      "comma-spacing": 0,
+      "no-use-before-define": 0,
+      "no-trailing-spaces": 0,
+      "no-extra-semi": 0,
+      "no-undef": 0,
+      "space-infix-ops": 0
     }
   },
   "dependencies": {}

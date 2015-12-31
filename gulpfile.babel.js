@@ -29,7 +29,7 @@ function lint(files, options) {
       .pipe(reload({stream: true, once: true}))
       .pipe($.eslint(options))
       .pipe($.eslint.format())
-      .pipe($.if(!browserSync.active, $.eslint.failAfterError()));
+      //.pipe($.if(!browserSync.active, $.eslint.failAfterError()));
   };
 }
 const testLintOptions = {
@@ -88,6 +88,14 @@ gulp.task('extras', () => {
   ], {
     dot: true
   }).pipe(gulp.dest('dist'));
+});
+
+gulp.task('media', () => {
+  return gulp.src([
+    'app/media/*.*',
+  ], {
+    dot: true
+  }).pipe(gulp.dest('dist/media'));
 });
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
@@ -159,13 +167,10 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint','html', 'images', 'fonts', 'extras','media'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
-gulp.task('lint-build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-});
 
 gulp.task('default', ['clean'], () => {
   gulp.start('build');

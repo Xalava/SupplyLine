@@ -1,14 +1,22 @@
-#Music
+# Supply Line
+
+Simple board strategy game in javascript
+v 1.0
+
+## Assets
+
+### Music
 	
-March &Suspense from Celestial Aeon Project CC NC by SA
+March By Celestial Aeon Project (CC NC by SA)
 
-#Images
+### Images
 
-Wheel By Tim Shedor, US
+Wheel By Tim Shedor
 
-## Todo 
-* 	Timer
-
-### Tech stack
+## Technology
+* Vanilla JS
 * Vue.js
 * Bootstrap
+
+## Todo 
+* Timer

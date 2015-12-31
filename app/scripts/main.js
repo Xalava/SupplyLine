@@ -11,7 +11,6 @@ window.onload = function () {
 var settings = {
 	nbPlayers: 2,
 	water: 10,
-	squareSize: 25,
 	mapX: 20,
 	mapY: 16,
 	cities: 3
@@ -27,7 +26,7 @@ var playersList = [{
 }, {
 	name: "Righty",
 	color: "#AEC",
-	colorClass:"colorB"
+	colorClass: "colorB"
 }]
 
 function launchGame() {
@@ -36,12 +35,14 @@ function launchGame() {
 		players[i] = new Player(i, playersList[i].name, playersList[i].color,playersList[i].colorClass)
 	};
 
+	if(screen.width<=767){
+		settings.mapX= 12;
+		settings.mapY= 14
+	}
 
-	daGame = new Game(settings.nbPlayers, settings.water, settings.cities, settings.mapX, settings.mapY, players, settings.squareSize);
+	daGame = new Game(settings.nbPlayers, settings.water, settings.cities, settings.mapX, settings.mapY, players);
 	console.log(daGame);
 	daGame.newTurn();
-
-
 	// Vue.js
 	game = new Vue({
 		el: '#game',
@@ -53,26 +54,26 @@ function launchGame() {
 			daPlayer: function () {
 				return this.players[this.currentPlayer];
 			},
-			mapWidth: function () {
-				return this.mapX * this.squareSize;
-			},
-			mapHeight: function () {
-				return this.mapY * this.squareSize;
-			},
-			squarelocation: function () {
-				return this.mapY * this.squareSize;
-			},
-			squares: function () {
-				return this.board.reduce(function (a, b) {
-					return a.concat(b);
-				});
-			},
 			rows: function () {
 				return this.board;
+			},
+			displayFeature: function () {
+				switch(this.nextSquare.feature){
+				case -1:
+					return "water";
+					break;
+				case 1:
+					return "glyphicon glyphicon-th";
+					break;
+				case 2:
+					return "glyphicon glyphicon-cog"
+					break;
+				default:
+					return ""
+				}						
 			}
 		},
 		components: {
-			// <-component> will only be available in Parent's template
 			'square-component': {
 				props: {
 					sq: Object
@@ -82,13 +83,6 @@ function launchGame() {
 					return this.sq;
 				}, // !??
 				computed: {
-					// isWater: function () {
-					// 	if (this.feature == -1) {
-					// 		return true;
-					// 	} else {
-					// 		return false;
-					// 	}
-					// },
 					isCity: function () {
 						if (this.feature == 1) {
 							return !this.occupied;
@@ -106,15 +100,6 @@ function launchGame() {
 					proba: function () {
 						return daGame.estimateDifficulty(this.y,this.x);
 					},
-					diplayFeature: function () {
-						
-					},
-					// playerColor: function () {
-					// 	//should be passed from parent
-					// 	if (this.owner > 0) {
-					// 		return daGame.players[this.owner].color;
-					// 	}
-					// },
 					ownerColorClass: function () {
 						if (this.feature == -1) {
 							return "water";
@@ -123,16 +108,12 @@ function launchGame() {
 								return daGame.players[this.owner].colorClass;
 							} else {
 								return daGame.players[this.owner].colorClass + ' ' + 'unsupplied';
-
-							}
-
-							
-						 }
-						
+							}					
+						}						
 					},
 					methods: {
 						sqAction: function () {
-							daGame.squareAction(this.boardCol, this.boardRow);
+							daGame.squareAction(this.row, this.col);
 						}
 					}
 				}

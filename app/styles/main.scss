@@ -12,27 +12,12 @@ $icon-font-path: '../fonts/';
 }
 
 
-$color-primary: #A55312;  // Main Primary color */ //used for logo
-$color-primary-1: #E09253;
-$color-primary-2: #CC7027;
-$color-primary-3: #823A00;
-$color-primary-4: #572700;
-
-$color-vivid: #16326E;  
-$color-vivid-1: #415C96;
-$color-vivid-2: #254588;
-$color-vivid-3: #082257;
-$color-vivid-4: #03153A;
-
-$color-neutral: #14860F;  // Main Secondary color (2) */
-$color-neutral-1: #49B643; // Vert PRINCIPAL
-$color-neutral-2: #26A51F;
-$color-neutral-3: #056900;
-$color-neutral-4: #044700;
-
-
-$colorA:#F34;
-$colorB:#AEC;
+$color-primary: #A55312;  // Main brown, used for logo
+$color-neutral: #49B643; // Neutral green
+$colorA: #F34;
+$colorB: #AEC;
+$color-water: #33E;
+$color-grid-bg: #AAA;
 
 // Space out content a bit 
 body {
@@ -91,6 +76,133 @@ body {
   }
 }
 
+.welcome-panel{ 
+  position:relative;   
+  #videoBg{
+    width: 100%; 
+    border-radius:3%; 
+    height: 70%
+  }
+
+  .welcome{  
+    text-shadow:#AAA 0.8px 0.8px 0.4px; 
+    background-color: rgba(200,200,200,0.5);
+    border-radius:4%;
+    max-height: 100%;
+    top: 50%;
+ }
+
+}
+
+
+// Game Style
+
+.gridy { 
+  width: 700px;
+  height: 600px;
+  margin-bottom:1em; 
+  border-collapse:collapse ;
+  background-color: #AAA;
+  //font-size: 
+  table-layout: fixed;
+
+}
+
+.gridy td {
+    cursor:pointer;
+    width: 15px; 
+    height:15px;
+    border:1px solid #AAA;
+    text-align:center;
+    font-family:sans-serif; font-size:16px ;
+    &:hover { 
+    }
+    &.clicked {
+      font-weight:bold; color:red;
+    }
+
+}
+
+@mixin square-color($color) {
+  background-color: $color;
+
+   &:hover {
+    background-color:darken($color,10%);
+    text-shadow: 1px 1px 1px #300000; 
+
+    }
+
+    &.unsupplied {
+      background-image: 
+        repeating-linear-gradient(
+          45deg,
+          lighten(desaturate($color,10%),20%),
+          darken(desaturate($color,10%),5%) 10px,
+          darken(desaturate($color,10%),20%) 5px
+        );
+      }
+}
+
+.colorNeutral { @include square-color($color-neutral); }
+.colorA { @include square-color($colorA); }
+.colorB { @include square-color($colorB); }
+
+.water {
+    background-image:
+    radial-gradient(
+      circle at top right,
+      #115,
+      $color-water
+    );
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+#audioControl{
+  display: table-cell;
+  vertical-align: bottom;
+  float: none;
+}
+
+
+
+//Small Screens adaptation 
+@media screen and (max-width: 767px) {
+  .header {
+    border-bottom:0;
+  }
+  .welcome-panel{
+    background: url('../media/supply.png') center center / cover no-repeat;
+    border-radius:5%;
+
+    #videoBg {
+      display: none;
+    }
+
+  }
+   
+  .gridy {
+    width: 100%;
+    height: 100%;
+  }
+
+  .infobox {
+
+    .panel-heading{
+      padding-top:5px;
+      padding-bottom:5px;
+
+      h3 {
+        margin-top: 10px;
+      }
+    }
+    .probability{
+      display: none;
+    }
+  }
+}
+
+
+
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -114,118 +226,24 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+
+  .welcome {
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%); 
+    padding: 1em;
+    border-bottom: 0;
+    position:absolute ;
+
+  }
+  #videoBg {
+    // background: url('media/supply.png') center center / cover no-repeat;
+  }
 }
 
-// Responsive: wide screens : 
-  //DEV : Default scenario
+// Responsive: wide screens
 @media screen and (min-width: 950px) {
   .container {
     max-width: 950px;
   }
-
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
 }
-
-
-
-// Game Style
-
-.infobox {
-  //background-color:$color-primary-1;
-}
-
-.gridy { 
-  width: 700px;
-  height: 600px;
-  margin:1em auto; 
-  border-collapse:collapse ;
-
-}
-
-.gridy td {
-    cursor:pointer;
-    width: 20px; 
-    height:20px;
-    border:1px solid #AAA;
-    //box-shadow: 1px 1px 1px 1px gray;
-    text-align:center;
-    font-family:sans-serif; font-size:16px ;
-    //background-color:$color-vivid-2;
-    //transition: all .2s ease-in-out; 
-    &:hover { 
-    // transform: scale(1.5); 
-    }
-    &.clicked {
-       font-weight:bold; color:red;
-    }
-
-}
-
-
-@mixin square-color($color) {
-  background-color: $color;
-
-
-   &:hover {
-   background-color:darken($color,10%);
-     text-shadow: 1px 1px 1px #300000; 
-
-  // color:#EEE;
-    }
-    &.unsupplied {
-    //background-color:desaturate($color,30%);
-//       background-image: 
-//         radial-gradient(
-//           circle at top right,
-// //          darken(desaturate($color,30%),20%) ,
-//           #CCC 10px,
-//           darken(desaturate($color,20%),10%) 
-//         );
-  background-image: 
-    repeating-linear-gradient(
-      45deg,
-      lighten(desaturate($color,10%),20%),
-      darken(desaturate($color,10%),5%) 10px,
-      darken(desaturate($color,10%),20%) 5px
-
-    );
-
-
-    }
-}
-
-.colorNeutral { @include square-color($color-neutral-1); }
-.colorA { @include square-color($colorA); }
-.colorB { @include square-color($colorB); }
-
-
-
-.water {
-    background-image:
-    radial-gradient(
-      circle at top right,
-      #115,
-      #33E
-    );
-    
-
-
-
-}
-

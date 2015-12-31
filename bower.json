@@ -13,9 +13,6 @@
         "assets/fonts/bootstrap/*",
         "assets/javascripts/bootstrap.js"
       ]
-    },
-    "vue":{
-      "main": "dist/vue.min.js"
     }
   },
   "devDependencies": {
