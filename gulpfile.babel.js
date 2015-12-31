@@ -38,9 +38,6 @@ const testLintOptions = {
   }
 };
 
-
-
-
 gulp.task('lint', lint('app/scripts/**/*.js'));
 gulp.task('lint:test', lint('test/spec/**/*.js', testLintOptions));
 
