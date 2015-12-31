@@ -44,7 +44,7 @@ Game.prototype.generateMap = function (mapX, mapY, water, cities, nbPlayers) {
 	// init
 	for (var j = mapY - 1; j >= 0; j--) {
 		map[j] = [];
-		var divide = Math.floor(this.mapX * 48 / 100)
+		var divide = Math.floor((this.mapX-3)/2)
 
 		for (var i = mapX - 1; i >= 0; i--) {
 			//Default (and avoid JS errors)
@@ -68,7 +68,7 @@ Game.prototype.generateMap = function (mapX, mapY, water, cities, nbPlayers) {
 				case 2:				
 					if (i < divide) {
 						map[j][i].owner = 1;
-					} else if (i > mapX - divide) {
+					} else if (i >= mapX - divide) {
 						map[j][i].owner = 2;
 					}
 					break;
@@ -335,7 +335,7 @@ Game.prototype.newTurn = function () {
 
 	//Reinforcement
 	if(this.turn>=this.nbPlayers){
-		this.players[this.currentPlayer].nbRsv += 3 + Math.floor(this.players[this.currentPlayer].nbCities/3);
+		this.players[this.currentPlayer].nbRsv += 2 + Math.floor(this.players[this.currentPlayer].nbCities/3);
 	} else {
 		this.players[this.currentPlayer].nbRsv += Math.floor(this.mapX/6)+ this.turn
 	}

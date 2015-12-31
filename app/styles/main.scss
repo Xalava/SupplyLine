@@ -11,7 +11,6 @@ $icon-font-path: '../fonts/';
   padding: 0.2em 0;
 }
 
-
 $color-primary: #A55312;  // Main brown, used for logo
 $color-neutral: #49B643; // Neutral green
 $colorA: #F34;
@@ -19,10 +18,14 @@ $colorB: #AEC;
 $color-water: #33E;
 $color-grid-bg: #AAA;
 
+
 // Space out content a bit 
 body {
   padding-top: 20px;
   padding-bottom: 20px;
+
+  background: url('../images/bread2.jpg') no-repeat center center fixed; ;
+  background-size: cover;
 
 }
 
@@ -44,6 +47,7 @@ body {
     margin-bottom: 0;
     line-height: 40px;
     padding-bottom: 19px;
+    text-align: right;
   }
 }
 
@@ -80,14 +84,14 @@ body {
   position:relative;   
   #videoBg{
     width: 100%; 
-    border-radius:3%; 
+    border-radius:10px; 
     height: 70%
   }
 
   .welcome{  
     text-shadow:#AAA 0.8px 0.8px 0.4px; 
     background-color: rgba(200,200,200,0.5);
-    border-radius:4%;
+    border-radius:30px;
     max-height: 100%;
     top: 50%;
  }
@@ -170,7 +174,7 @@ body {
     border-bottom:0;
   }
   .welcome-panel{
-    background: url('../media/supply.png') center center / cover no-repeat;
+    background: url('../images/supply.jpg') center center / cover no-repeat;
     border-radius:5%;
 
     #videoBg {

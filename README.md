@@ -20,3 +20,7 @@ Wheel By Tim Shedor
 
 ## Todo 
 * Timer
+* Full screen video at welcome, diseappears on scroll
+* Settings
+* Network game
+* IA

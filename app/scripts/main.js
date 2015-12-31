@@ -11,7 +11,7 @@ window.onload = function () {
 var settings = {
 	nbPlayers: 2,
 	water: 10,
-	mapX: 20,
+	mapX: 21,
 	mapY: 16,
 	cities: 3
 }
@@ -36,7 +36,7 @@ function launchGame() {
 	};
 
 	if(screen.width<=767){
-		settings.mapX= 12;
+		settings.mapX= 11;
 		settings.mapY= 14
 	}
 
