@@ -11,16 +11,17 @@ March By Celestial Aeon Project (CC NC by SA)
 
 ### Images
 
-Wheel By Tim Shedor
+Wheel By Tim Shedor (The Noun Project)
 
 ## Technology
-* Vanilla JS
-* Vue.js
-* Bootstrap
 
-## Todo 
+* [Vanilla JS](http://vanilla-js.com/)
+* [Vue.js](http://vuejs.org/)
+* [Bootstrap](examples/jumbotron/)
+
+## Todo
+
 * Timer
-* Full screen video at welcome, diseappears on scroll
 * Settings
 * Network game
 * IA

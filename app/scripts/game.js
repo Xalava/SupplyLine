@@ -27,6 +27,10 @@ var Game = function (nbPlayers, water, cities, mapX, mapY, players) {
 	this.board = this.generateMap(mapX, mapY, water, cities, nbPlayers);
 	this.mTxt = "Welcome to Supply Line"
 	this.mType = "success"
+
+	this.elTimer = 200;//200
+	this.isTimer= false;
+
 	//should be on the view side
 	this.nextSquare = this.board[0][0];
 	this.nextProba = 0;
@@ -98,6 +102,11 @@ Game.prototype.message = function (txt, type) {
 	//success, info, warning, danger
 }
 Game.prototype.squareAction = function (y, x) {
+
+// if(!this.isTimer){
+// 	this.isTimer=true;
+// 	this.timedCount();
+// }
 
 	var cs = this.board[y][x]
 	if (cs.feature === Game.WATER) {
@@ -339,6 +348,32 @@ Game.prototype.newTurn = function () {
 	} else {
 		this.players[this.currentPlayer].nbRsv += Math.floor(this.mapX/6)+ this.turn
 	}
+	//this.resetTimer
 	this.message("New turn", "info");
 	console.log('New turn of ', this.currentPlayer)
+
 }
+
+
+
+
+
+
+// var timerHandle;
+
+// Game.prototype.timedCount= function() {
+// 	console.log("timer",this.elTimer);
+//     if(this.elTimer<=0){
+//     	this.endTurn();
+//     	this.resetTimer();
+//     } else {
+// 	   	timerHandle = setTimeout(this.timedCount(), 1000);
+// 	    this.elTimer -=1;
+//     }
+// }
+
+// Game.prototype.resetTimer= function() {
+// 	this.elTimer= 200;
+// 	timerHandle = setTimeout( this.timedCount(), 1000);
+
+// }

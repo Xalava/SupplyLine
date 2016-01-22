@@ -71,6 +71,18 @@ function launchGame() {
 				default:
 					return ""
 				}						
+			},
+			proba: function (){
+				var proba = 100- this.nextProba;
+				if (proba < 10) {
+					return "0" + proba;
+				} else {
+					return proba;
+				}
+
+			},
+			timer: function (){
+				return getTime();
 			}
 		},
 		components: {
